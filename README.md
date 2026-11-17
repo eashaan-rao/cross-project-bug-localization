@@ -1,127 +1,86 @@
-# Cross-Project Bug Localisation (CPL) — Replication Package (Code)
+# Cross-Project Bug Localisation (CPL): Replication Package
 
-Code artifact accompanying the paper *"What Works, What Doesn't, and Why: An Empirical
-Investigation of Cross-Project Bug Localisation"* (A Eashaan Rao, Sridhar Chimalakonda,
-Indian Institute of Technology Tirupati).
+Code and results for the paper *"What Works, What Doesn't, and Why: An Empirical Investigation
+of Cross-Project Bug Localisation"* (A Eashaan Rao, Sridhar Chimalakonda, IIT Tirupati).
 
-The study benchmarks three bug localisation models — **TRANP-CNN**, **COOBA**, and **BLAZE** —
-on 63 source→target pairs drawn from 13 Python projects, under four scenarios:
+We compare three bug localisation models (**TRANP-CNN**, **COOBA**, **BLAZE**) on 63
+source→target pairs from 13 Python projects, under four training scenarios:
 
-| Scenario | Source data | Target training data |
+| Scenario | Source project data | Target project data |
 |---|---|---|
-| WP-small | — | 20% of target bugs |
-| WP-large | — | 80% of target bugs |
-| CP-cold-start | all source bugs | — |
+| WP-small | none | 20% of target bugs |
+| WP-large | none | 80% of target bugs |
+| CP-cold-start | all source bugs | none |
 | CP-transfer | all source bugs | 20% of target bugs |
 
-All scenarios share the same held-out target test split (20%, `random_state=42`) and the same
-first-stage FAISS retrieval: `BAAI/bge-code-v1` embeddings, `IndexFlatIP`, top-300 candidates,
-which every model then reranks.
+All scenarios are tested on the same 20% target test split. Each model reranks the same
+top-300 FAISS candidates (`BAAI/bge-code-v1` embeddings).
 
-The companion **data artifact** (curated bug-report / project metadata and a sample embedding
-database) is archived on Zenodo: <https://doi.org/10.5281/zenodo.21560518>.
+The data (bug reports, project metadata, a sample embedding database) is on Zenodo:
+<https://doi.org/10.5281/zenodo.21560518>.
 
-## Repository layout
+## Quick start: reproduce the paper's tables and figures
 
-```
-src/                          # Model implementations
-├── tranp_cnn/                # TRANP-CNN — CNN-based reranker (text + code)
-├── cooba/                    # COOBA — GNN-based bug localisation (AST embeddings, adversarial adaptation)
-├── blaze/                    # BLAZE — embedding-based reranker
-└── blgan/                    # BL-GAN (imported by the runner; not reported in the paper)
-
-Scripts/
-├── build_embed_database_pipeline.py   # Stage 1: build embedding databases
-├── run_expts_ph1.py                   # Stage 2: main experiment runner (all pairs x 4 scenarios)
-├── run_wp_small_matched_budget.py     # Stage 2b: WP-small, run once per (model, target)
-├── run_faiss_experiment.py            # Stage 3: FAISS retrieval recall baseline
-├── domain_gap.py                      # Stage 4: pairwise domain-gap analysis
-├── analysis/                          # Statistical analyses, tables and figures (see below)
-└── utils/check_and_unshallow_repos.py # Helper to verify / unshallow the cloned repositories
-
-benchmark_dataset_analysis/   # Notebooks documenting selection/curation of the project dataset
-docs/model_guides/            # Re-implementation notes for COOBA and TRANP-CNN, checked against the original papers
-results/                      # Result CSVs, per-bug diagnostics and analysis figures
-journal_draft/figs/           # Figures as they appear in the paper (output of journal_figures.py)
-```
-
-## Environment setup
-
-Requires **Python 3.12**. A CUDA GPU is used automatically if available; all scripts fall back
-to CPU otherwise.
+This doesn't need a GPU. The analysis scripts read the result CSVs already in `results/`,
+plus `project_metadata.parquet` and `bug_reports.parquet` from the Zenodo data.
 
 ```bash
-python3 -m venv obj1
-source obj1/bin/activate
+# 1. Set up the environment (Python 3.12)
+python3 -m venv venv
+source venv/bin/activate
 pip install -r requirements.txt
-```
 
-All scripts use **absolute paths** defined as module-level constants at the top of each file
-(`/home/cs21d002_eashaan/PhD/Objective1/...`). Edit these to point at your local checkout and
-data locations before running.
+# 2. Download the Zenodo data and update the paths.
+#    Each script has its paths hard-coded near the top
+#    (for example ROOT = "/home/cs21d002_eashaan/PhD/Objective1").
+#    Change them to where this repository and the data are on your machine.
 
-## Reproducing the experiments
-
-```bash
-# Stage 1: build embedding databases (multi-process, BAAI/bge-code-v1)
-python Scripts/build_embed_database_pipeline.py
-
-# Stage 2: train/evaluate all models on all pairs and scenarios
-#          -> results/obj1_experimental_results.csv, results/*_ph1_diagnostics/
-python Scripts/run_expts_ph1.py
-
-# Stage 2b: WP-small does not depend on the source project, so it is run once per
-#           (model, target) and broadcast to every pair sharing that target
-python Scripts/run_wp_small_matched_budget.py          # -> results/wp_small_matched_budget.csv
-python Scripts/analysis/merge_wp_small_matched_budget.py
-
-# Stage 3: FAISS retrieval recall baseline  -> results/faiss_recall_results/
-python Scripts/run_faiss_experiment.py
-
-# Stage 4: pairwise domain gap              -> results/all_project_domain_gaps.csv
-python Scripts/domain_gap.py
-```
-
-Both runners are resumable (completed rows are skipped) and support `SHARD` / `NUM_SHARDS` for
-splitting work across GPUs.
-
-## Reproducing the paper's analyses
-
-Every analysis reads the 63-pair paper results file `results/paper_results_complete_corrected.csv`
-(756 rows = 63 pairs × 4 scenarios × 3 models; metric definitions as in the paper). `n_test` is the
-number of test bugs per run and `n_reachable` the number whose ground-truth file is in the FAISS top-300.
-
-```bash
-python Scripts/analysis/main_results_table.py               # scenario means, CPL gain, Wilcoxon tests
-python Scripts/analysis/effect_size_analysis.py             # Cohen's d effect sizes, stratified
-python Scripts/analysis/negative_transfer_analysis.py       # negative transfer, commutativity, cross-domain
-python Scripts/analysis/mixed_effects_check.py              # clustering-robust check (needs the step above)
-python Scripts/analysis/cold_start_viability_analysis.py    # CP-cold-start viability
-python Scripts/analysis/cross_model_consistency_analysis.py # cross-model agreement
+# 3. Run the analyses
+python Scripts/analysis/main_results_table.py               # main results + Wilcoxon tests
+python Scripts/analysis/effect_size_analysis.py             # Cohen's d
+python Scripts/analysis/negative_transfer_analysis.py       # negative transfer
+python Scripts/analysis/mixed_effects_check.py              # robustness check (run after the line above)
+python Scripts/analysis/cold_start_viability_analysis.py    # CP-cold-start
+python Scripts/analysis/cross_model_consistency_analysis.py # agreement between models
 python Scripts/analysis/source_quality_transfer_analysis.py # source quality vs. transfer
-python Scripts/analysis/source_selection_analysis.py        # Kendall tau / Hit@K source selection
-python Scripts/analysis/equivalence_and_robustness_tests.py # TOST equivalence and robustness tests
+python Scripts/analysis/source_selection_analysis.py        # source project selection
+python Scripts/analysis/equivalence_and_robustness_tests.py # TOST equivalence tests
 python Scripts/analysis/journal_figures.py                  # paper figures -> journal_draft/figs/
 ```
 
-## Key results files (in `results/`)
+Outputs are written to `results/` and `results/images/`.
 
-| File | Description |
+## Full re-run of the experiments (GPU recommended)
+
+This retrains every model, so you also need the cloned project repositories and the full
+embedding databases. The Zenodo `DATA_README.md` explains how to rebuild them.
+
+```bash
+python Scripts/build_embed_database_pipeline.py        # 1. build embedding databases
+python Scripts/run_expts_ph1.py                        # 2. all models, pairs and scenarios
+python Scripts/run_wp_small_matched_budget.py          # 3. WP-small (once per target)
+python Scripts/analysis/merge_wp_small_matched_budget.py
+python Scripts/run_faiss_experiment.py                 # 4. FAISS retrieval recall
+python Scripts/domain_gap.py                           # 5. domain gap between projects
+```
+
+If a run stops, start it again and it skips what's already done. To split the work across
+GPUs, set the `SHARD` and `NUM_SHARDS` environment variables.
+
+## What's in the repository
+
+| Folder | Contents |
 |---|---|
-| `paper_results_complete_corrected.csv` | Paper results: 63 pairs × 4 scenarios × 3 models, Top-1/5/10, MAP, MRR |
-| `obj1_experimental_results.csv` / `obj1_experimental_results_corrected.csv` | Raw runner output (all pairs run), with per-run reachability counts in the latter |
-| `wp_small_matched_budget.csv` | Per-target WP-small results (13 targets × 3 models) |
-| `main_results_*.csv` | Scenario means, CPL gain summary, Wilcoxon tests |
-| `effect_size_*.csv`, `negative_transfer_analysis*.csv`, `cross_domain_breakdown.csv` | Effect size and negative transfer analyses |
-| `cold_start_viability.csv`, `cross_model_agreement*.csv`, `source_quality_transfer.csv`, `source_selection_validation*.csv` | Remaining RQ analyses |
-| `all_project_domain_gaps.csv` | Pairwise domain gap (logistic-regression accuracy) |
-| `faiss_recall_results/`, `mrr_per_ext_repo.csv` | FAISS first-stage recall@K per project |
-| `{tranp_cnn,cooba,blaze}_ph1_diagnostics/` | Per-bug ranking diagnostics (FAISS rank vs. model rank) for every run |
-| `images/` | Figures produced by the analysis scripts |
+| `src/` | Model code: `tranp_cnn/`, `cooba/`, `blaze/` (`blgan/` is imported by the runner but not used in the paper) |
+| `Scripts/` | Experiment runners; `Scripts/analysis/` holds the statistics and figures |
+| `results/` | All result CSVs, per-bug diagnostics and figures |
+| `journal_draft/figs/` | Figures as they appear in the paper |
+| `benchmark_dataset_analysis/` | Notebooks showing how the 13 projects were chosen |
+| `docs/model_guides/` | Notes on how COOBA and TRANP-CNN were re-implemented |
 
-The raw source-code embedding caches, tokenised training caches and cloned project repositories
-are not included (too large); see the data artifact's `DATA_README.md` for regeneration commands.
+The main results file is `results/paper_results_complete_corrected.csv`, with 756 rows
+(63 pairs × 4 scenarios × 3 models) and Top-1/5/10, MAP and MRR for each run.
 
 ## Citation
 
-If you use this code, please cite the paper (see the Zenodo record's citation metadata).
+If you use this code, please cite the paper. The Zenodo record has the citation details.
