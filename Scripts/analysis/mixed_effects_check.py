@@ -3,10 +3,12 @@ mixed_effects_check.py
 Linear mixed-effects model of CPL gain (CP-transfer MRR - WP-small MRR) on model identity,
 target project as random intercept. Supports the Conclusion-validity paragraph of the paper.
 """
+import os
 import pandas as pd
 import statsmodels.formula.api as smf
 
-ROOT = "/home/cs21d002_eashaan/PhD/Objective1"
+# Repository root; all data and result paths below are relative to it.
+ROOT = os.path.abspath(os.path.join(os.path.dirname(__file__), "..", ".."))
 df = pd.read_csv(f"{ROOT}/results/negative_transfer_analysis.csv")
 df["model"] = pd.Categorical(df["model_name"], ["BLAZE", "COOBA", "TRANP-CNN"])
 res = smf.mixedlm("delta_mrr ~ C(model)", df, groups=df["target_project"]).fit(reml=True)

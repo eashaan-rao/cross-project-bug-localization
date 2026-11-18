@@ -29,10 +29,12 @@ from scipy.stats import spearmanr
 from project_metadata import load_project_metadata
 
 # ── Paths ─────────────────────────────────────────────────────────────────────
-RESULTS_CSV  = "/home/cs21d002_eashaan/PhD/Objective1/results/paper_results_complete_corrected.csv"
-METADATA_PKL = "/home/cs21d002_eashaan/PhD/Objective1/data/processed/project_metadata.parquet"
-IMG_DIR      = "/home/cs21d002_eashaan/PhD/Objective1/results/images"
-OUT_CSV      = "/home/cs21d002_eashaan/PhD/Objective1/results/cross_model_agreement.csv"
+# Repository root; all data and result paths below are relative to it.
+REPO_ROOT = os.path.abspath(os.path.join(os.path.dirname(__file__), "..", ".."))
+RESULTS_CSV  = os.path.join(REPO_ROOT, "results/paper_results_complete_corrected.csv")
+METADATA_PKL = os.path.join(REPO_ROOT, "data/processed/project_metadata.parquet")
+IMG_DIR      = os.path.join(REPO_ROOT, "results/images")
+OUT_CSV      = os.path.join(REPO_ROOT, "results/cross_model_agreement.csv")
 
 os.makedirs(IMG_DIR, exist_ok=True)
 
@@ -186,7 +188,7 @@ def build_pairwise_table(df):
               ('*' if r['p_value'] < 0.05 else 'n.s.'))
         print(f"  {r['pair']:22s} n={r['n']:.0f}  agreement={r['agreement_pct']:.0f}%  "
               f"rho={r['spearman_rho']:.3f} {sig} (p={r['p_value']:.4f})")
-    out = "/home/cs21d002_eashaan/PhD/Objective1/results/cross_model_agreement_pairwise.csv"
+    out = os.path.join(REPO_ROOT, "results/cross_model_agreement_pairwise.csv")
     table.to_csv(out, index=False)
     print(f"  ✓ {out}")
     return table

@@ -28,7 +28,9 @@ from .data_prep import (
 )
 
 # Configuration
-RESULT_PATH = "/home/cs21d002_eashaan/PhD/Objective1/results"
+# Repository root; all data and result paths below are relative to it.
+REPO_ROOT = os.path.abspath(os.path.join(os.path.dirname(__file__), "..", ".."))
+RESULT_PATH = os.path.join(REPO_ROOT, "results")
 
 
 TOP_K_CANDIDATES = 300

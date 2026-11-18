@@ -36,10 +36,12 @@ from scipy.stats import spearmanr
 from project_metadata import load_project_metadata
 
 # ── Paths ─────────────────────────────────────────────────────────────────────
-RESULTS_CSV  = "/home/cs21d002_eashaan/PhD/Objective1/results/paper_results_complete_corrected.csv"
-METADATA_PKL = "/home/cs21d002_eashaan/PhD/Objective1/data/processed/project_metadata.parquet"
-IMG_DIR      = "/home/cs21d002_eashaan/PhD/Objective1/results/images"
-OUT_CSV      = "/home/cs21d002_eashaan/PhD/Objective1/results/source_quality_transfer.csv"
+# Repository root; all data and result paths below are relative to it.
+REPO_ROOT = os.path.abspath(os.path.join(os.path.dirname(__file__), "..", ".."))
+RESULTS_CSV  = os.path.join(REPO_ROOT, "results/paper_results_complete_corrected.csv")
+METADATA_PKL = os.path.join(REPO_ROOT, "data/processed/project_metadata.parquet")
+IMG_DIR      = os.path.join(REPO_ROOT, "results/images")
+OUT_CSV      = os.path.join(REPO_ROOT, "results/source_quality_transfer.csv")
 
 os.makedirs(IMG_DIR, exist_ok=True)
 

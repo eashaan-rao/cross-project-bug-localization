@@ -1,11 +1,15 @@
+import os
 import pandas as pd
+
+# Repository root; all data and result paths below are relative to it.
+REPO_ROOT = os.path.abspath(os.path.join(os.path.dirname(__file__), ".."))
 
 # Path to the input CSV file with the LoC Data. 
 # This file should have columns: 'repo_name', 'language', 'LoC'
-INPUT_CSV_PATH = '/home/user/CS21D002_A_Eashaan_Rao/Research/PhD/Objective1/benchmark_dataset_analysis/repo_LOC.csv'
+INPUT_CSV_PATH = os.path.join(REPO_ROOT, 'benchmark_dataset_analysis/repo_LOC.csv')
 
 # Path for the output CSV file.
-OUTPUT_CSV_PATH = '/home/user/CS21D002_A_Eashaan_Rao/Research/PhD/Objective1/benchmark_dataset_analysis/repo_category.csv'
+OUTPUT_CSV_PATH = os.path.join(REPO_ROOT, 'benchmark_dataset_analysis/repo_category.csv')
 # Dictionary to store the calculated tercile values for each language
 tercile_values = {}
 

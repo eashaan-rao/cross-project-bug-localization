@@ -11,11 +11,13 @@ import torch
 import matplotlib.pyplot as plt
 
 # Configuration
-PROJECTS_METADATA_PATH = "/home/cs21d002_eashaan/PhD/Objective1/data/processed/project_metadata.parquet"
-BUG_REPORTS_PATH = "/home/cs21d002_eashaan/PhD/Objective1/data/processed/bug_reports_clean.parquet"
-REPO_BASE_PATH = "/home/cs21d002_eashaan/PhD/Objective1/data/repos"
-DATABASE_DIR = "/home/cs21d002_eashaan/PhD/Objective1/data/processed/embedding_dbs"
-RESULT_PATH = "/home/cs21d002_eashaan/PhD/Objective1/results"
+# Repository root; all data and result paths below are relative to it.
+REPO_ROOT = os.path.abspath(os.path.join(os.path.dirname(__file__), ".."))
+PROJECTS_METADATA_PATH = os.path.join(REPO_ROOT, "data/processed/project_metadata.parquet")
+BUG_REPORTS_PATH = os.path.join(REPO_ROOT, "data/processed/bug_reports_clean.parquet")
+REPO_BASE_PATH = os.path.join(REPO_ROOT, "data/repos")
+DATABASE_DIR = os.path.join(REPO_ROOT, "data/processed/embedding_dbs")
+RESULT_PATH = os.path.join(REPO_ROOT, "results")
 MODEL_NAME = "BAAI/bge-code-v1" # long-context model
 
 LANGUAGE_EXTENSIONS = {

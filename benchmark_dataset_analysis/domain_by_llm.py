@@ -10,13 +10,15 @@ from tqdm import tqdm
 MY_API_KEY = os.environ.get("GEMINI_API_KEY", "")  # set GEMINI_API_KEY in your environment
 
 # Path to your input CSV with all other metadata
-INPUT_CSV_PATH = "/home/user/CS21D002_A_Eashaan_Rao/Research/PhD/Objective1/benchmark_dataset_analysis/obj1_rd3_dataset.csv"
+# Repository root; all data and result paths below are relative to it.
+REPO_ROOT = os.path.abspath(os.path.join(os.path.dirname(__file__), ".."))
+INPUT_CSV_PATH = os.path.join(REPO_ROOT, "benchmark_dataset_analysis/obj1_rd3_dataset.csv")
 
 # Path for the final output CSV with the new domain column
-OUTPUT_CSV_PATH = "/home/user/CS21D002_A_Eashaan_Rao/Research/PhD/Objective1/benchmark_dataset_analysis/obj1_rd3_domain.csv"
+OUTPUT_CSV_PATH = os.path.join(REPO_ROOT, "benchmark_dataset_analysis/obj1_rd3_domain.csv")
 
 # Path to the parent directory where repos are cloned
-CLONE_DIR = '/home/user/CS21D002_A_Eashaan_Rao/Research/PhD/Objective1/temp_repos/'
+CLONE_DIR = os.path.join(REPO_ROOT, 'temp_repos/')
 
 # Load API Key and Configure Model
 # The script will look for the GOOGLE_API_KEY environment variable

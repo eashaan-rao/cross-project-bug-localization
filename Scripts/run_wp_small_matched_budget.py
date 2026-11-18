@@ -85,8 +85,10 @@ MODELS = {
 # matching CP-transfer.
 WP_SMALL_TRAIN_SIZE = 0.25
 
-BUG_REPORTS_PATH = "/home/cs21d002_eashaan/PhD/Objective1/data/processed/bug_reports_clean.parquet"
-RESULT_PATH      = "/home/cs21d002_eashaan/PhD/Objective1/results"
+# Repository root; all data and result paths below are relative to it.
+REPO_ROOT = os.path.abspath(os.path.join(os.path.dirname(__file__), ".."))
+BUG_REPORTS_PATH = os.path.join(REPO_ROOT, "data/processed/bug_reports_clean.parquet")
+RESULT_PATH      = os.path.join(REPO_ROOT, "results")
 
 REP = os.environ.get('WP_SMALL_REP', '1')
 RESULTS_FILE = os.path.join(

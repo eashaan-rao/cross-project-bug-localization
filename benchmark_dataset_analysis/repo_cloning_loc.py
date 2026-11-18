@@ -6,10 +6,12 @@ from tqdm import tqdm
 
 # ---- Configuration -----
 # 1. Path to the input CSV file - it should have columns: 'repo_name', 'repo_link', 'language'
-INPUT_CSV_PATH = '/home/user/CS21D002_A_Eashaan_Rao/Research/PhD/Objective1/benchmark_dataset_analysis/repo_list_rd2.csv'
+# Repository root; all data and result paths below are relative to it.
+REPO_ROOT = os.path.abspath(os.path.join(os.path.dirname(__file__), ".."))
+INPUT_CSV_PATH = os.path.join(REPO_ROOT, 'benchmark_dataset_analysis/repo_list_rd2.csv')
 
 # 2. Path for the output CSV File.
-OUTPUT_CSV_PATH = '/home/user/CS21D002_A_Eashaan_Rao/Research/PhD/Objective1/benchmark_dataset_analysis/repo_loc_results.csv'
+OUTPUT_CSV_PATH = os.path.join(REPO_ROOT, 'benchmark_dataset_analysis/repo_loc_results.csv')
 
 # 3.The directory where all repos will be cloned and stored in language subfolders
 CLONE_DIR = 'temp_repos/'

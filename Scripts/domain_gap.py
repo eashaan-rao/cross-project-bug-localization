@@ -10,10 +10,12 @@ from tqdm import tqdm
 
 # --- Configuration (Adjust as needed) ---
 # Use paths from your pipeline script
-BUG_METADATA_DIR = "/home/cs21d002_eashaan/PhD/Objective1/data/processed/embedding_dbs"
-BLOB_DB_DIR = "/home/cs21d002_eashaan/PhD/Objective1/data/processed/embedding_dbs"
-PROJECTS_METADATA_PATH = "/home/cs21d002_eashaan/PhD/Objective1/data/processed/project_metadata.parquet"
-OUTPUT_CSV = "/home/cs21d002_eashaan/PhD/Objective1/results/all_project_domain_gaps.csv"
+# Repository root; all data and result paths below are relative to it.
+REPO_ROOT = os.path.abspath(os.path.join(os.path.dirname(__file__), ".."))
+BUG_METADATA_DIR = os.path.join(REPO_ROOT, "data/processed/embedding_dbs")
+BLOB_DB_DIR = os.path.join(REPO_ROOT, "data/processed/embedding_dbs")
+PROJECTS_METADATA_PATH = os.path.join(REPO_ROOT, "data/processed/project_metadata.parquet")
+OUTPUT_CSV = os.path.join(REPO_ROOT, "results/all_project_domain_gaps.csv")
 # --- End Configuration ---
 
 def load_data(project_name):
@@ -133,10 +135,10 @@ if __name__ == "__main__":
 # from sklearn.metrics import accuracy_score
 
 # # Load the databases
-# with open('/home/cs21d002_eashaan/PhD/Objective1/data/processed/embedding_dbs/spring-projects_spring-data-mongodb_blob_embeddings32.pkl', 'rb') as f:
+# with open(os.path.join(REPO_ROOT, 'data/processed/embedding_dbs/spring-projects_spring-data-mongodb_blob_embeddings32.pkl'), 'rb') as f:
 #     source_blob_db = pickle.load(f)
 
-# with open('/home/cs21d002_eashaan/PhD/Objective1/data/processed/embedding_dbs/spring-projects_spring-data-jpa_blob_embeddings32.pkl', 'rb') as f:
+# with open(os.path.join(REPO_ROOT, 'data/processed/embedding_dbs/spring-projects_spring-data-jpa_blob_embeddings32.pkl'), 'rb') as f:
 #     target_blob_db = pickle.load(f)
 
 # # Get all embeddings as NumPy arrays

@@ -24,12 +24,14 @@ torch.set_float32_matmul_precision('high')
 logging.set_verbosity_error()
 
 # Configuration
-PROJECTS_METADATA_PATH = "/home/cs21d002_eashaan/PhD/Objective1/data/processed/project_metadata.parquet"
-BUG_REPORTS_PATH = "/home/cs21d002_eashaan/PhD/Objective1/data/processed/bug_reports.parquet"
-REPO_BASE_PATH = "/home/cs21d002_eashaan/PhD/Objective1/data/repos"
-DATABASE_DIR = "/home/cs21d002_eashaan/PhD/Objective1/data/processed/embedding_dbs" # for blobs
-# BUG_DB_PATH = "/home/cs21d002_eashaan/PhD/Objective1/data/processed/bug_embedding_database.pkl"
-DATA_PATH = "/home/cs21d002_eashaan/PhD/Objective1/data"
+# Repository root; all data and result paths below are relative to it.
+REPO_ROOT = os.path.abspath(os.path.join(os.path.dirname(__file__), ".."))
+PROJECTS_METADATA_PATH = os.path.join(REPO_ROOT, "data/processed/project_metadata.parquet")
+BUG_REPORTS_PATH = os.path.join(REPO_ROOT, "data/processed/bug_reports.parquet")
+REPO_BASE_PATH = os.path.join(REPO_ROOT, "data/repos")
+DATABASE_DIR = os.path.join(REPO_ROOT, "data/processed/embedding_dbs") # for blobs
+# BUG_DB_PATH = os.path.join(REPO_ROOT, "data/processed/bug_embedding_database.pkl")
+DATA_PATH = os.path.join(REPO_ROOT, "data")
 MODEL_NAME = "BAAI/bge-code-v1" # long-context model
 CONSUMER_BATCH_SIZE = 256 # We will tune this based on the system performance
 NUM_CPU_WORKERS = 8 # Start with 16 and we can increase this up to 96 in this machine

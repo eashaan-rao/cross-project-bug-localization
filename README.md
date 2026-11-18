@@ -24,16 +24,17 @@ The data (bug reports, project metadata, a sample embedding database) is on Zeno
 This doesn't need a GPU. The analysis scripts read the result CSVs already in `results/`,
 plus `project_metadata.parquet` and `bug_reports.parquet` from the Zenodo data.
 
+All paths are relative to the repository root, so you can run the scripts from any folder.
+
 ```bash
 # 1. Set up the environment (Python 3.12)
 python3 -m venv venv
 source venv/bin/activate
 pip install -r requirements.txt
 
-# 2. Download the Zenodo data and update the paths.
-#    Each script has its paths hard-coded near the top
-#    (for example ROOT = "/home/cs21d002_eashaan/PhD/Objective1").
-#    Change them to where this repository and the data are on your machine.
+# 2. Download the Zenodo data and put the .parquet files in data/processed/
+mkdir -p data/processed
+cp /path/to/zenodo_download/*.parquet data/processed/
 
 # 3. Run the analyses
 python Scripts/analysis/main_results_table.py               # main results + Wilcoxon tests
@@ -53,7 +54,15 @@ Outputs are written to `results/` and `results/images/`.
 ## Full re-run of the experiments (GPU recommended)
 
 This retrains every model, so you also need the cloned project repositories and the full
-embedding databases. The Zenodo `DATA_README.md` explains how to rebuild them.
+embedding databases. The Zenodo `DATA_README.md` explains how to rebuild them. The scripts
+expect this layout inside the repository:
+
+```
+data/
+├── repos/<language>/<owner>_<repo>/     # cloned project repositories
+├── processed/                           # .parquet files, embedding_dbs/, model caches
+└── glove/glove.6B.300d.txt              # GloVe vectors (COOBA only)
+```
 
 ```bash
 python Scripts/build_embed_database_pipeline.py        # 1. build embedding databases

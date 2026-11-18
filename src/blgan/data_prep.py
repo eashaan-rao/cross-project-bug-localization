@@ -32,12 +32,14 @@ from .ast_parsers import get_parser_for_language, encode_ast_with_vocab
 # ---------------------------------------------------------------------------
 # Path constants
 # ---------------------------------------------------------------------------
-REPO_BASE_PATH = "/home/cs21d002_eashaan/PhD/Objective1/data/repos"
-BUG_METADATA_DIR = "/home/cs21d002_eashaan/PhD/Objective1/data/processed/embedding_dbs"
-BLOB_DB_DIR = "/home/cs21d002_eashaan/PhD/Objective1/data/processed/embedding_dbs"
-PROJECTS_METADATA_PATH = "/home/cs21d002_eashaan/PhD/Objective1/data/processed/project_metadata.parquet"
-BUG_REPORTS_PATH = "/home/cs21d002_eashaan/PhD/Objective1/data/processed/bug_reports_clean.parquet"
-BLGAN_CACHE_DIR = "/home/cs21d002_eashaan/PhD/Objective1/data/processed/blgan_cache"
+# Repository root; all data and result paths below are relative to it.
+REPO_ROOT = os.path.abspath(os.path.join(os.path.dirname(__file__), "..", ".."))
+REPO_BASE_PATH = os.path.join(REPO_ROOT, "data/repos")
+BUG_METADATA_DIR = os.path.join(REPO_ROOT, "data/processed/embedding_dbs")
+BLOB_DB_DIR = os.path.join(REPO_ROOT, "data/processed/embedding_dbs")
+PROJECTS_METADATA_PATH = os.path.join(REPO_ROOT, "data/processed/project_metadata.parquet")
+BUG_REPORTS_PATH = os.path.join(REPO_ROOT, "data/processed/bug_reports_clean.parquet")
+BLGAN_CACHE_DIR = os.path.join(REPO_ROOT, "data/processed/blgan_cache")
 
 # ---------------------------------------------------------------------------
 # Tokenisation / vocabulary constants

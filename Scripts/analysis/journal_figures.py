@@ -32,7 +32,8 @@ from scipy.stats import wilcoxon, spearmanr
 from project_metadata import load_project_metadata
 
 # ── Paths ──────────────────────────────────────────────────────────────────────
-ROOT         = "/home/cs21d002_eashaan/PhD/Objective1"
+# Repository root; all data and result paths below are relative to it.
+ROOT         = os.path.abspath(os.path.join(os.path.dirname(__file__), "..", ".."))
 RESULTS_CSV  = f"{ROOT}/results/paper_results_complete_corrected.csv"
 METADATA_PKL = f"{ROOT}/data/processed/project_metadata.parquet"
 EFFECT_CSV   = f"{ROOT}/results/effect_size_summary.csv"

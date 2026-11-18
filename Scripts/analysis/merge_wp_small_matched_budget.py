@@ -28,16 +28,19 @@ Run inside the obj1 virtualenv:
     python Scripts/analysis/merge_wp_small_matched_budget.py
 """
 
+import os
 import pandas as pd
 
-WPS_CSV = "/home/cs21d002_eashaan/PhD/Objective1/results/wp_small_matched_budget.csv"
+# Repository root; all data and result paths below are relative to it.
+REPO_ROOT = os.path.abspath(os.path.join(os.path.dirname(__file__), "..", ".."))
+WPS_CSV = os.path.join(REPO_ROOT, "results/wp_small_matched_budget.csv")
 
 METRICS = ["top-1", "top-5", "top-10", "MAP", "MRR"]
 
 TARGET_FILES = [
-    "/home/cs21d002_eashaan/PhD/Objective1/results/paper_results_complete_corrected.csv",
-    "/home/cs21d002_eashaan/PhD/Objective1/results/obj1_experimental_results_corrected.csv",
-    "/home/cs21d002_eashaan/PhD/Objective1/results/obj1_experimental_results.csv",
+    os.path.join(REPO_ROOT, "results/paper_results_complete_corrected.csv"),
+    os.path.join(REPO_ROOT, "results/obj1_experimental_results_corrected.csv"),
+    os.path.join(REPO_ROOT, "results/obj1_experimental_results.csv"),
 ]
 
 

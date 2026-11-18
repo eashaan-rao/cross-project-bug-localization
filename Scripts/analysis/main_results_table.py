@@ -32,8 +32,10 @@ import pandas as pd
 from scipy.stats import wilcoxon
 
 # ── Paths ─────────────────────────────────────────────────────────────────────
-RESULTS_CSV = "/home/cs21d002_eashaan/PhD/Objective1/results/paper_results_complete_corrected.csv"
-OUT_DIR     = "/home/cs21d002_eashaan/PhD/Objective1/results"
+# Repository root; all data and result paths below are relative to it.
+REPO_ROOT = os.path.abspath(os.path.join(os.path.dirname(__file__), "..", ".."))
+RESULTS_CSV = os.path.join(REPO_ROOT, "results/paper_results_complete_corrected.csv")
+OUT_DIR     = os.path.join(REPO_ROOT, "results")
 
 SCENARIOS       = ['WP-small', 'WP-large', 'CP-cold-start', 'CP-transfer']
 METRICS         = ['MRR', 'MAP', 'top-1', 'top-5', 'top-10']

@@ -31,13 +31,15 @@ from scipy.stats import spearmanr, wilcoxon
 from project_metadata import load_project_metadata
 
 # ── Paths ─────────────────────────────────────────────────────────────────────
-RESULTS_CSV  = "/home/cs21d002_eashaan/PhD/Objective1/results/paper_results_complete_corrected.csv"
-METADATA_PKL = "/home/cs21d002_eashaan/PhD/Objective1/data/processed/project_metadata.parquet"
-DOMAIN_CSV   = "/home/cs21d002_eashaan/PhD/Objective1/results/all_project_domain_gaps.csv"
-IMG_DIR      = "/home/cs21d002_eashaan/PhD/Objective1/results/images"
-OUT_CSV           = "/home/cs21d002_eashaan/PhD/Objective1/results/negative_transfer_analysis.csv"
-OUT_COMM_CSV      = "/home/cs21d002_eashaan/PhD/Objective1/results/negative_transfer_analysis_commutativity.csv"
-OUT_CROSSDOMAIN_CSV = "/home/cs21d002_eashaan/PhD/Objective1/results/cross_domain_breakdown.csv"
+# Repository root; all data and result paths below are relative to it.
+REPO_ROOT = os.path.abspath(os.path.join(os.path.dirname(__file__), "..", ".."))
+RESULTS_CSV  = os.path.join(REPO_ROOT, "results/paper_results_complete_corrected.csv")
+METADATA_PKL = os.path.join(REPO_ROOT, "data/processed/project_metadata.parquet")
+DOMAIN_CSV   = os.path.join(REPO_ROOT, "results/all_project_domain_gaps.csv")
+IMG_DIR      = os.path.join(REPO_ROOT, "results/images")
+OUT_CSV           = os.path.join(REPO_ROOT, "results/negative_transfer_analysis.csv")
+OUT_COMM_CSV      = os.path.join(REPO_ROOT, "results/negative_transfer_analysis_commutativity.csv")
+OUT_CROSSDOMAIN_CSV = os.path.join(REPO_ROOT, "results/cross_domain_breakdown.csv")
 
 # The 6 DS projects form the within-domain group (Group A pairs in paper set).
 DS_PROJECTS = {

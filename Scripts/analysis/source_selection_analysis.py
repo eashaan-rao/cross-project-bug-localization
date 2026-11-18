@@ -36,13 +36,15 @@ from sklearn.preprocessing import MinMaxScaler
 from project_metadata import load_project_metadata
 
 # ── Paths ─────────────────────────────────────────────────────────────────────
-RESULTS_CSV  = "/home/cs21d002_eashaan/PhD/Objective1/results/paper_results_complete_corrected.csv"
-METADATA_PKL = "/home/cs21d002_eashaan/PhD/Objective1/data/processed/project_metadata.parquet"
-DOMAIN_CSV   = "/home/cs21d002_eashaan/PhD/Objective1/results/all_project_domain_gaps.csv"
-FAISS_DIR    = "/home/cs21d002_eashaan/PhD/Objective1/results/faiss_recall_results"
-IMG_DIR      = "/home/cs21d002_eashaan/PhD/Objective1/results/images"
-OUT_CSV_TMPL = "/home/cs21d002_eashaan/PhD/Objective1/results/source_selection_validation_{model}.csv"
-OUT_CSV_ALL  = "/home/cs21d002_eashaan/PhD/Objective1/results/source_selection_validation.csv"
+# Repository root; all data and result paths below are relative to it.
+REPO_ROOT = os.path.abspath(os.path.join(os.path.dirname(__file__), "..", ".."))
+RESULTS_CSV  = os.path.join(REPO_ROOT, "results/paper_results_complete_corrected.csv")
+METADATA_PKL = os.path.join(REPO_ROOT, "data/processed/project_metadata.parquet")
+DOMAIN_CSV   = os.path.join(REPO_ROOT, "results/all_project_domain_gaps.csv")
+FAISS_DIR    = os.path.join(REPO_ROOT, "results/faiss_recall_results")
+IMG_DIR      = os.path.join(REPO_ROOT, "results/images")
+OUT_CSV_TMPL = os.path.join(REPO_ROOT, "results/source_selection_validation_{model}.csv")
+OUT_CSV_ALL  = os.path.join(REPO_ROOT, "results/source_selection_validation.csv")
 
 FAISS_K = 300   # candidate pool size used by TRANP-CNN/COOBA/BLAZE rerankers
 

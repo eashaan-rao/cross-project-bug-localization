@@ -2,7 +2,9 @@ import pandas as pd
 import os 
 import subprocess
 
-PROJECTS_METADATA_PATH = '/home/cs21d002_eashaan/PhD/Objective1/data/processed/project_metadata.parquet'
+# Repository root; all data and result paths below are relative to it.
+REPO_ROOT = os.path.abspath(os.path.join(os.path.dirname(__file__), "..", ".."))
+PROJECTS_METADATA_PATH = os.path.join(REPO_ROOT, 'data/processed/project_metadata.parquet')
 REPO_BASE_PATH = 'data/repos'
 
 def get_project_path(repo_name, language):

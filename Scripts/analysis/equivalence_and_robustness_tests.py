@@ -14,11 +14,14 @@ Run inside the obj1 virtualenv:
     python Scripts/analysis/equivalence_and_robustness_tests.py
 """
 
+import os
 import numpy as np
 import pandas as pd
 from scipy import stats
 
-RESULTS_CSV = "/home/cs21d002_eashaan/PhD/Objective1/results/obj1_experimental_results_corrected.csv"
+# Repository root; all data and result paths below are relative to it.
+REPO_ROOT = os.path.abspath(os.path.join(os.path.dirname(__file__), "..", ".."))
+RESULTS_CSV = os.path.join(REPO_ROOT, "results/obj1_experimental_results_corrected.csv")
 TOST_MARGIN_MRR = 0.05  # smallest mean CPL gain treated as practically meaningful
 TOST_SENSITIVITY_MARGINS = (0.02, 0.10)
 
