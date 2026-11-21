@@ -16,8 +16,8 @@ source→target pairs from 13 Python projects, under four training scenarios:
 All scenarios are tested on the same 20% target test split. Each model reranks the same
 top-300 FAISS candidates (`BAAI/bge-code-v1` embeddings).
 
-The data (bug reports, project metadata, a sample embedding database) is on Zenodo:
-<https://doi.org/10.5281/zenodo.21560518>.
+The archived replication package, with the data (bug reports, project metadata, a sample
+embedding database), is on Zenodo: <https://doi.org/10.5281/zenodo.23984359>.
 
 ## Quick start: reproduce the paper's tables and figures
 
@@ -32,9 +32,10 @@ python3 -m venv venv
 source venv/bin/activate
 pip install -r requirements.txt
 
-# 2. Download the Zenodo data and put the .parquet files in data/processed/
+# 2. Download cpl_data_artifact.zip from Zenodo and put the .parquet files in data/processed/
+unzip cpl_data_artifact.zip
 mkdir -p data/processed
-cp /path/to/zenodo_download/*.parquet data/processed/
+cp cpl_data_artifact/*.parquet data/processed/
 
 # 3. Run the analyses
 python Scripts/analysis/main_results_table.py               # main results + Wilcoxon tests
@@ -54,7 +55,8 @@ Outputs are written to `results/` and `results/images/`.
 ## Full re-run of the experiments (GPU recommended)
 
 This retrains every model, so you also need the cloned project repositories and the full
-embedding databases. The Zenodo `DATA_README.md` explains how to rebuild them. The scripts
+embedding databases. `cpl_data_artifact/DATA_README.md` (inside the Zenodo zip) explains how
+to rebuild them. The scripts
 expect this layout inside the repository:
 
 ```
