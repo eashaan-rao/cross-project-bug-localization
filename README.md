@@ -47,7 +47,8 @@ python Scripts/analysis/cross_model_consistency_analysis.py # agreement between 
 python Scripts/analysis/source_quality_transfer_analysis.py # source quality vs. transfer
 python Scripts/analysis/source_selection_analysis.py        # source project selection
 python Scripts/analysis/equivalence_and_robustness_tests.py # TOST equivalence tests
-python Scripts/analysis/journal_figures.py                  # paper figures -> journal_draft/figs/
+python Scripts/analysis/journal_figures.py                  # paper figures -> results/figures/
+python Scripts/analysis/fig_feature_corr_ist.py results/negative_transfer_analysis.csv results/figures/fig_feature_corr_ist  # Figure 4
 ```
 
 Outputs are written to `results/` and `results/images/`.
@@ -85,7 +86,7 @@ GPUs, set the `SHARD` and `NUM_SHARDS` environment variables.
 | `src/` | Model code: `tranp_cnn/`, `cooba/`, `blaze/` (`blgan/` is imported by the runner but not used in the paper) |
 | `Scripts/` | Experiment runners; `Scripts/analysis/` holds the statistics and figures |
 | `results/` | All result CSVs, per-bug diagnostics and figures |
-| `journal_draft/figs/` | Figures as they appear in the paper |
+| `results/figures/` | Figures as they appear in the paper (Figure 1 is drawn by hand) |
 | `benchmark_dataset_analysis/` | Notebooks showing how the 13 projects were chosen |
 | `docs/model_guides/` | Notes on how COOBA and TRANP-CNN were re-implemented |
 | `docs/supplementary_results.pdf` | Extended results for the paper (search protocol, model and statistical details, further RQ1–RQ3 results) |

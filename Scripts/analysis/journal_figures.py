@@ -1,8 +1,8 @@
 """
 journal_figures.py
 ──────────────────
-Generates all journal-quality figures for the JSS paper.
-Output directory: journal_draft/figs/
+Generates the paper's figures.
+Output directory: results/figures/
 
 Figures produced
 ────────────────
@@ -37,7 +37,7 @@ ROOT         = os.path.abspath(os.path.join(os.path.dirname(__file__), "..", "..
 RESULTS_CSV  = f"{ROOT}/results/paper_results_complete_corrected.csv"
 METADATA_PKL = f"{ROOT}/data/processed/project_metadata.parquet"
 EFFECT_CSV   = f"{ROOT}/results/effect_size_summary.csv"
-OUT_DIR      = f"{ROOT}/journal_draft/figs"
+OUT_DIR      = f"{ROOT}/results/figures"
 
 os.makedirs(OUT_DIR, exist_ok=True)
 
