@@ -88,9 +88,16 @@ GPUs, set the `SHARD` and `NUM_SHARDS` environment variables.
 | `journal_draft/figs/` | Figures as they appear in the paper |
 | `benchmark_dataset_analysis/` | Notebooks showing how the 13 projects were chosen |
 | `docs/model_guides/` | Notes on how COOBA and TRANP-CNN were re-implemented |
+| `docs/supplementary_results.pdf` | Extended results for the paper (search protocol, model and statistical details, further RQ1–RQ3 results) |
 
 The main results file is `results/paper_results_complete_corrected.csv`, with 756 rows
 (63 pairs × 4 scenarios × 3 models) and Top-1/5/10, MAP and MRR for each run.
+
+BLAZE note: in the paper's runs, BLAZE split every file into fixed 60-line chunks. Its
+code-structure chunker fell back silently to this split because `tree-sitter==0.25.2` is
+incompatible with `tree-sitter-languages==1.10.2`. With a working tree-sitter install the
+chunker splits at code-structure boundaries instead, so BLAZE numbers will differ from the
+paper. Use those two versions to reproduce the paper exactly.
 
 ## Citation
 
